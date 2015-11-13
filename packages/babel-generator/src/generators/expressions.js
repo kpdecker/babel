@@ -101,6 +101,9 @@ export function CallExpression(node: Object) {
 
   this.printList(node.arguments, node, { separator });
 
+  // Check again if any of our children may have left an aux comment on the stack
+  if (node.loc) this.printAuxAfterComment();
+
   if (isPrettyCall) {
     this.newline();
     this.dedent();
@@ -135,6 +138,10 @@ export function EmptyStatement() {
 
 export function ExpressionStatement(node: Object) {
   this.print(node.expression, node);
+
+  // Check again if any of our children may have left an aux comment on the stack
+  if (node.loc) this.printAuxAfterComment();
+
   this.semicolon();
 }
 
